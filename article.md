@@ -5,28 +5,28 @@
 
 Мы не будем углубляться в то, как должно быть структурировано приложение React, поскольку мы сосредоточены на использовании GSAP, но методы, используемые в этом руководстве, соответствуют официальным рекомендациям и были проверены разработчиками инструмента React Transition Group. Мы начнем с простого, а ближе к концу будем усложнять.
 
-## How GSAP Works
-GSAP basically updates numeric properties of an object many times per second which creates the illusion of animation. For DOM elements, GSAP updates the the inline style properties.
+## Как работает GSAP
+GSAP в основном обновляет числовые свойства объекта много раз в секунду, что создает иллюзию анимации. Для элементов DOM GSAP обновляет свойства встроенного стиля.
 
 ```js
 const myElement = document.getElementById("my-element");
 TweenLite.to(myElement, 1, {width: 100, backgroundColor: "red"});
 ```
 
-As you can see this means that we need access to the actual DOM node rendered in the document in order to pass it to the `TweenLite.to()` method.
+Как видите, это означает, что нам нужен доступ к фактическому узлу DOM, отображаемому в документе, чтобы передать его методу `TweenLite.to()`.
 
-## How React Works
-Explaining how React works is beyond the scope of this article, but let's focus on how React gets the **[JSX](https://reactjs.org/docs/introducing-jsx.html)** code we write and puts that in the DOM.
+## Как работает React
+Объяснение того, как работает React, выходит за рамки этой статьи, но давайте сосредоточимся на том, как React получает **[JSX](https://reactjs.org/docs/introduction-jsx.html)** код, который мы пишем и помещаем в DOM.
 
 ```js
 <div className="my-class">
-  Some content here
+  Здесь ваш контент
 </div>
 ```
 
-With React, we normally don't pass an id attribute to the element because we use a declarative way to access methods, instances, props and state. It's through the component's (or the application's) state that we can change how things are represented in the DOM. There's no direct DOM manipulation, so typically there's no need to actually access the DOM.
+В React мы обычно не передаем элементу атрибут id, потому что мы используем декларативный способ доступа к методам, экземплярам, свойствам и состоянию. Именно через состояние компонента (или приложения) мы можем изменить способ представления вещей в DOM. Прямых манипуляций с DOM нет, поэтому обычно нет необходимости обращаться к DOM.
 
-The React team has given developers ways to access the DOM nodes when needed, and the API changed a bit over the years as React matured. At this time (September, 2018) the latest version of React (16.4.2) allows developers to use Refs to access the DOM nodes. In this guide we'll mainly use the **[Callback Refs](https://reactjs.org/docs/refs-and-the-dom.html#callback-refs)** to create a reference to the DOM node and then feed it into GSAP animations because it's much faster for GSAP to directly manipulate properties rather than funneling them through React's state machine.
+Команда React дала разработчикам способы доступа к узлам DOM, когда это необходимо, и API немного изменился с годами по мере развития React. В настоящее время (сентябрь 2018 г.) последняя версия React (16.4.2) позволяет разработчикам использовать ссылки для доступа к узлам DOM. В этом руководстве мы в основном будем использовать **[Callback Refs](https://reactjs.org/docs/refs-and-the-dom.html#callback-refs)** для создания ссылки на узел DOM. а затем передать его в анимацию GSAP, потому что GSAP гораздо быстрее напрямую манипулирует свойствами, а не направляет их через конечный автомат React.
 
 ## Creating Our First Animation
 
