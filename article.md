@@ -1,9 +1,9 @@
-## Preface
-This guide assumes a basic knowledge of both the **[GreenSock Animation Platform](https://greensock.com/get-started-js/)** (GSAP) and **[React](https://reactjs.org/)**, as well as some common tools used to develop a React app.
+## Предисловие
+Это руководство предполагает базовые знания как **[GreenSock Animation Platform](https://greensock.com/get-started-js/)** (GSAP), так и **[React](https://reactjs.org/)**, а также некоторые общие инструменты, используемые для разработки приложений React.
 
-As **[GSAP](https://greensock.com/gsap)** becomes the de-facto standard for creating rich animations and UI's on the web, developers must learn how to integrate it with other tools like React which has become popular because it allows developers to write their apps in a modular, declarative and re-usable fashion. As a moderator in the **[GreenSock forums](https://greensock.com/forums/)**, I've noticed that there are a few common hurdles to getting the two working together seamlessly, like referencing the DOM element appropriately, doing things **The React Way**, etc. which is why I'm writing this article.
+Поскольку **[GSAP](https://greensock.com/gsap)** становится де-факто стандартом для создания богатой анимации и пользовательского интерфейса в Интернете, разработчики должны научиться интегрировать его с другими инструментами, такими как React, который стал популярен, потому что позволяет разработчикам писать свои приложения в модульном, декларативном и многократно используемом виде. Как модератор на **[форумах GreenSock](https://greensock.com/forums/)**, я заметил, что есть несколько общих препятствий для беспрепятственной совместной работы этих двух элементов, например ссылка на элемент DOM соответственно, делая что-то **The React Way** и т. д., поэтому я пишу эту статью.
 
-We won't delve into how a React app should be structured since our focus is on using GSAP, but the techniques used throughout this guide follow the official guidelines and have been reviewed by maintainers of the React Transition Group tool. We'll start simple and get more complex toward the end.
+Мы не будем углубляться в то, как должно быть структурировано приложение React, поскольку мы сосредоточены на использовании GSAP, но методы, используемые в этом руководстве, соответствуют официальным рекомендациям и были проверены разработчиками инструмента React Transition Group. Мы начнем с простого, а ближе к концу будем усложнять.
 
 ## How GSAP Works
 GSAP basically updates numeric properties of an object many times per second which creates the illusion of animation. For DOM elements, GSAP updates the the inline style properties.
