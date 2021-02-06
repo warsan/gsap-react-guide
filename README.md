@@ -1,36 +1,36 @@
-# GSAP & React Guide Samples
+# Примеры GSAP и React Guide
 [![Dependency Status](https://img.shields.io/david/rhernandog/gsap-react-guide.svg)](https://david-dm.org/rhernandog/gsap-react-guide)
-## Description
-This is a collection of samples used in the GSAP & React official guide.
+## Описание
+Это набор примеров, используемых в официальном руководстве GSAP & React.
 
-This repo groups all the samples from the official [GreenSock](https://github.com/greensock) guide to animate DOM elements in a React app using [GSAP]() and (in some cases) [React Transition Group]
+В этом репо сгруппированы все образцы из официального руководства [GreenSock](https://github.com/greensock) по анимации элементов DOM в приложении React с помощью [GSAP]() и (в некоторых случаях) [React Transition Group]()
 
-#### Important Note
-The code and bundling on this repository is not meant for production code, just development and learning purposes. If you want to deploy some part of this code into a production app, use a startup of your like, such as Create React App or other, and then include the code in that bundling environment.
+#### Важная заметка
+Код и комплектация в этом репозитории не предназначены для производственного кода, а предназначены только для целей разработки и обучения. Если вы хотите развернуть некоторую часть этого кода в производственном приложении, используйте аналогичный запуск, например Create React App или другой, а затем включите код в эту среду сборки.
 
-## Installing
-Just clone the repo:
+## Установка
+Просто клонируйте репо:
 ```
 $ git clone https://github.com/rhernandog/gsap-react-guide.git
 ```
-Or just download the ZIP file and extract it in your local machine.
+Или просто скачайте ZIP-файл и распакуйте его на свой локальный компьютер.
 
-Then install the dependencies:
+Затем установите зависимости:
 ```
 $ npm install
 ```
 
-## Live Samples and Edit
-In order to view the live samples you need to open the `index.js` file in the `src/` folder. In it import the sample you want from the `src/components/` folder and run:
+## Живые семплы и редактирование
+Для просмотра живых примеров вам нужно открыть файл `index.js` в папке `src/`. В нем импортируйте нужный образец из папки `src/components/` и запустите:
 ```
 $ npm start
 ```
-To update the styles change the files in the `src/styles/` folder. The `base.css` file is the one used as well... base for all the samples. Then each sample might have a specific stylesheet that's imported in the specific `js` file in the `src/components/` folder.
+Чтобы обновить стили, измените файлы в папке `src/styles/`. Файл `base.css` также используется ... база для всех образцов. Тогда каждый образец может иметь определенную таблицу стилей, которая импортирована в конкретный файл `js` в папке `src/components/`.
 
 ```js
 import ComponentName from "./components/path-to-component";
 
-// in the render method
+// в методе рендеринга
 render(){
   return <div>
     <ComponentName />
@@ -38,14 +38,14 @@ render(){
 }
 ```
 
-#### About the TransitionList Component.
-The transition list component, obviously works with a dynamic list of elements that can be increased or reduced by user interaction. This list is passed through the props of the components in the `src/index.js` file and should be imported in that root file from the `helpers/` folder:
+#### О компоненте TransitionList.
+Компонент списка переходов, очевидно, работает с динамическим списком элементов, который может быть увеличен или уменьшен при взаимодействии с пользователем. Этот список передается через свойства компонентов в файле `src/index.js` и должен быть импортирован в этот корневой файл из папки `helpers/`:
 
 ```js
 import TransitionList from "./components/transition-list";
 import { cards } from "./helpers/transition-group-cards";
 
-// then in the render method of the main app
+// затем в методе рендеринга основного приложения
 render(){
   return <div>
     <TransitionList cards={cards} />
@@ -53,47 +53,47 @@ render(){
 }
 ```
 
-## Changelog
+## Журнал изменений
 
 #### Version 1.2.2
-- Synced article content betweent the article.md file and the article in GreenSock's blog.
+- Синхронизированное содержание статьи между файлом article.md и статьей в блоге GreenSock.
 
 #### Version 1.2.1
-- Properly formatted FAQ's markdown.
+- Правильно отформатированные FAQ в markdown.
 
 #### Version 1.2.0
-- Fixed route in readme file.
-- Added acknowledgments in the article and readme files.
-- Created FAQ file.
-- Added sample to control state using GSAP.
+- Исправлен маршрут в файле readme.
+- Добавлены благодарности в статьи и файлы readme.
+- Создан файл FAQ.
+- Добавлен образец для управления состоянием с помощью GSAP.
 
 #### Version 1.1.0
-- Fixes implicit returns in `ref` callbacks.
-- Adds `constructor` method to each sample and passes the `props` to the `super` call.
-- Fixes issues in JSX, moving attributes in long lines to an independent line each.
-- Changes sample code in the [multiple elements](https://github.com/rhernandog/gsap-react-guide/blob/master/src/components/simple%20tween/multiple-elements.js) sample, in order to remove side effects from the ref callback. Creates an array with the DOM elements and then uses that array in `componentDidMount` to create the timeline.
+- Исправляет неявный возврат в обратных вызовах `ref`.
+- Добавляет метод `constructor` к каждому образцу и передает `props` вызову `super`.
+- Устраняет проблемы в JSX, перемещая атрибуты из длинных строк в независимую строку.
+- Изменяет пример кода в примере [несколько элементов](https://github.com/rhernandog/gsap-react-guide/blob/master/src/components/simple%20tween/multiple-elements.js), чтобы удалить побочные эффекты от обратного вызова ref. Создает массив с элементами DOM, а затем использует этот массив в `componentDidMount` для создания временной шкалы.
 
 #### Version 1.0.0
-- Stable initial commit.
+- Стабильная начальная фиксация.
 
-## Bug Report
-Just create an [issue](https://github.com/rhernandog/gsap-forums-react/issues).
+## Отчёт об ошибке
+Просто создайте [проблему](https://github.com/rhernandog/gsap-forums-react/issues).
 
-## Contributing
-Create a PR and test it thoroughly before submitting it. 
+## Содействие
+Создайте PR и тщательно проверьте его перед отправкой. 
 
-## License
-This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/rhernandog/gsap-react-guide/blob/master/LICENSE.md) file for details.
+## Лицензия
+Этот проект находится под лицензией MIT License - подробности см. В файле [LICENSE.md](https://github.com/rhernandog/gsap-react-guide/blob/master/LICENSE.md).
 
 ## Author
 - Rodrigo Hernando
 - Twitter [@websnapcl](https://twitter.com/websnapcl)
 - Codepen [rhernando](https://codepen.io/rhernando/)
 
-## Acknowledgments
-First I'd like to thank Jack Doyle (creator of GreenSock) and [Carl Schooff](https://twitter.com/snorklTV) (GreenSock's one and only Geek Ambassador) for trusting me such an important task.
+## Благодарности
+Сначала я хотел бы поблагодарить Джека Дойла (создателя GreenSock) и [Карла Шоффа](https://twitter.com/snorklTV) (единственного и неповторимого посла GreenSock Geek) за то, что они доверили мне такую важную задачу.
 
-Also I'd like to thank the following developers:
+Также хочу поблагодарить следующих разработчиков:
 
 - Xiaoyan Wang (Horizon Blue). A very talented React developer, while Xiaoyan doesn't have a very active *social* life (twitter, facebook, etc), you can follow what He does in [GitHub](https://github.com/horizon-blue).
 - Jason Quense. One of the maintainers of React Transition Group and part of React Bootstrap. Also collaborates in many other React-related projects. Check Jason's [GitHub profile](https://github.com/jquense) for more info.
