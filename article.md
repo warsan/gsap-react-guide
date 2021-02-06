@@ -36,14 +36,14 @@ TweenLite.to(myElement, 1, {width: 100, backgroundColor: "red"});
 class MyComponent extends Component {
   constructor(props){
     super(props);
-    // reference to the DOM node
+    // ссылка на узел DOM
     this.myElement = null;
-    // reference to the GSAP instance
+    // ссылка на экземпляр GSAP
     this.myTween = null;
   }
   
   componentDidMount(){
-    // use the node ref to create the GSAP instance
+    // используйте ссылку на узел для создания экземпляра GSAP
     this.myTween = TweenLite.to(this.myElement, 1, {x: 100, y: 100});
   }
 
