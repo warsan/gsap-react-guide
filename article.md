@@ -133,8 +133,8 @@ render(){
 
 ## Анимация через состояние
 
-The most commonly used pattern to update a React app is through changing the state of its components. So it's easy to control when and how elements are animated based on the app state. It's not very difficult to listen to state changes and control a GSAP animation depending on state, using the **[componentDidUpdate()](https://reactjs.org/docs/react-component.html#componentdidupdate)** lifecycle method. Basically we compare the value of a state property before the update and after the update, and control the animation accordingly.
-Наиболее часто используемый шаблон для обновления приложения React - это изменение состояния его компонентов. Таким образом, легко контролировать, когда и как элементы анимируются в зависимости от состояния приложения. Прослушивать изменения состояния и управлять анимацией GSAP в зависимости от состояния не очень сложно, используя **[componentDidUpdate()](https://reactjs.org/docs/react-component.html#componentdidupdate)** метод жизненного цикла. Обычно мы сравниваем значение свойства состояния до и после обновления и соответственно управляем анимацией.
+Наиболее часто используемый шаблон для обновления приложения React - это изменение состояния его компонентов. 
+Таким образом, легко контролировать, когда и как элементы анимируются в зависимости от состояния приложения. Прослушивать изменения состояния и управлять анимацией GSAP в зависимости от состояния не очень сложно, используя **[componentDidUpdate()](https://reactjs.org/docs/react-component.html#componentdidupdate)** метод жизненного цикла. Обычно мы сравниваем значение свойства состояния до и после обновления и соответственно управляем анимацией.
 
 ```js
 componentDidUpdate(prevProps, prevState) {
