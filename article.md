@@ -28,9 +28,9 @@ TweenLite.to(myElement, 1, {width: 100, backgroundColor: "red"});
 
 Команда React дала разработчикам способы доступа к узлам DOM, когда это необходимо, и API немного изменился с годами по мере развития React. В настоящее время (сентябрь 2018 г.) последняя версия React (16.4.2) позволяет разработчикам использовать ссылки для доступа к узлам DOM. В этом руководстве мы в основном будем использовать **[Callback Refs](https://reactjs.org/docs/refs-and-the-dom.html#callback-refs)** для создания ссылки на узел DOM. а затем передать его в анимацию GSAP, потому что GSAP гораздо быстрее напрямую манипулирует свойствами, а не направляет их через конечный автомат React.
 
-## Creating Our First Animation
+## Создание нашей первой анимации
 
-We'll use the **ref** to access the DOM node and the **[componentDidMount()](https://reactjs.org/docs/react-component.html#componentdidmount)**  lifecycle method of the component to create our first animation, because this will guarantee that the node has been added to the DOM tree and is ready to be passed into a GSAP animation.
+Мы будем использовать **ref** для доступа к узлу DOM и **[componentDidMount()](https://reactjs.org/docs/react-component.html#componentdidmount)** метод жизненного цикла компонента. для создания нашей первой анимации, потому что это гарантирует, что узел был добавлен в дерево DOM и готов к передаче в анимацию GSAP.
 
 ```js
 class MyComponent extends Component {
@@ -53,14 +53,14 @@ class MyComponent extends Component {
   }
 }
 ```
-Not that difficult, right? Let's go through the code so we can understand what is happening.
-First when we create an instance of this class, two properties are added to it: `myElement` and `myTween`, but both are equal to null. Why? Because at this point the node has not been added to the DOM tree and if we try to pass this node to a GSAP animation, we'll get an error indicating that GSAP cannot tween a `null` target.
+Не так уж и сложно, правда? Давайте рассмотрим код, чтобы понять, что происходит.
+Сначала, когда мы создаем экземпляр этого класса, к нему добавляются два свойства: `myElement` и `myTween`, но оба они равны нулю. Зачем? Поскольку на этом этапе узел не был добавлен в дерево DOM, и если мы попытаемся передать этот узел в анимацию GSAP, мы получим ошибку, указывающую, что GSAP не может создать промежуточную цель `null`.
 
-After the new instance has been initialized, the **[render()](https://reactjs.org/docs/react-component.html#render)** method runs. In the render method we're using the **ref** attribute that is basically a function that has a single parameter – the DOM node being added to the DOM tree. At this point we update the reference to the DOM node created in the class constructor. After that, this reference is no longer `null` and can be used anywhere we need it in our component.
+После инициализации нового экземпляра запускается метод **[render()](https://reactjs.org/docs/react-component.html#render)**. В методе рендеринга мы используем атрибут **ref**, который, по сути, представляет собой функцию с единственным параметром - узел DOM, добавляемый в дерево DOM. На этом этапе мы обновляем ссылку на узел DOM, созданный в конструкторе класса. После этого эта ссылка больше не является `null` и может использоваться в любом месте нашего компонента.
 
-Finally, the **[componentDidMount()](https://reactjs.org/docs/react-component.html#componentdidmount)** method runs and updates the reference to myTween with a **[TweenLite](https://greensock.com/docs/TweenLite)** tween whose `target` is the internal reference to the DOM node that should animate. Simple, elegant and very React-way of us!
+Наконец, запускается метод **[componentDidMount()](https://reactjs.org/docs/react-component.html#componentdidmount)** и обновляет ссылку на myTween с помощью **[TweenLite](https://greensock.com/docs/TweenLite)** tween, чья `target` является внутренней ссылкой на узел DOM, который должен анимироваться. Просто, элегантно и очень похоже на React от нас!
 
-It is worth mentioning that we could have created a **one-run-animation** by not creating a reference to the TweenLite tween in the constructor method. We could have just created a tween in the `componentDidMount` method and it would run immediately, like this:
+Стоит упомянуть, что мы могли бы создать **анимацию с одним запуском**, не создавая ссылку на анимацию TweenLite в методе конструктора. Мы могли бы просто создать анимацию движения в методе `componentDidMount`, и она сразу же запустилась бы, например:
 
 ```js
 componentDidMount(){
@@ -68,7 +68,7 @@ componentDidMount(){
 }
 ```
 
-The main benefit of storing a TweenLite tween as a reference in the component, is that this pattern allows us to use any of the methods GSAP has to offer like: [play()](https://greensock.com/docs/TweenMax/play()), [pause()](https://greensock.com/docs/TweenMax/pause()), [reverse()](https://greensock.com/docs/TweenMax/reverse()), [restart()](https://greensock.com/docs/TweenMax/restart()), [seek()](https://greensock.com/docs/TweenMax/seek()), change the speed ([timeScale](https://greensock.com/docs/TweenMax/timeScale())), etc., to get full control of the animations. Also this approach allows us to create any GSAP animation ([TweenLite](https://greensock.com/docs/TweenLite), [TweenMax](https://greensock.com/docs/TweenMax), [TimelineLite](https://greensock.com/docs/TimelineLite), etc.) in the constructor. For example, we could use a timeline in order to create a complex animation:
+Основное преимущество хранения анимации движения TweenLite в качестве ссылки в компоненте заключается в том, что этот шаблон позволяет нам использовать любой из методов, которые GSAP предлагает, например: [play()](https://greensock.com/docs/TweenMax/play()), [pause()](https://greensock.com/docs/TweenMax/pause()), [reverse()](https://greensock.com/docs/TweenMax/reverse()), [restart()](https://greensock.com/docs/TweenMax/restart()), [seek()](https://greensock.com/docs/TweenMax/seek()), изменить скорость ([timeScale](https://greensock.com/docs/TweenMax/timeScale())), и т.д., чтобы получить полный контроль над анимацией. Также этот подход позволяет нам создавать любую анимацию GSAP ([TweenLite](https://greensock.com/docs/TweenLite), [TweenMax](https://greensock.com/docs/TweenMax), [TimelineLite](https://greensock.com/docs/TimelineLite), и т. д.) в конструкторе. Например, мы могли бы использовать временную шкалу для создания сложной анимации:
 
 ```js
 constructor(props){
@@ -85,13 +85,13 @@ componentDidMount(){
 }
 ```
 
-With this approach we create a paused Timeline in the constructor and add the individual tweens using the shorthand methods. Since the Timeline was paused initially, we play it after adding all the tweens to it. We could also leave it paused and control it somewhere else in our app. The following example shows this technique:
+При таком подходе мы создаем приостановленную временную шкалу в конструкторе и добавляем отдельные анимации движения, используя сокращенные методы. Поскольку временная шкала изначально была приостановлена, мы воспроизводим ее после добавления к ней всех подростков. Мы также можем оставить его приостановленным и управлять им где-нибудь в другом месте нашего приложения. Следующий пример демонстрирует эту технику:
 
 #### SIMPLE TWEEN DEMO
 [https://stackblitz.com/edit/gsap-react-simple-tween](https://stackblitz.com/edit/gsap-react-simple-tween)
 
-## Animating a Group of Elements
-One of the perks of using React is that allows us to add a group of elements using the `array.map()` method, which reduces the amount of HTML we have to write. This also can help us when creating an animation for all those elements. Let's say that you want to animate a group of elements onto the screen in a staggered fashion. It's simple:
+## Анимация группы элементов
+Одним из преимуществ использования React является то, что мы можем добавлять группу элементов с помощью метода `array.map()`, что сокращает объем HTML-кода, который мы должны написать. Это также может помочь нам при создании анимации для всех этих элементов. Предположим, вы хотите поэтапно анимировать группу элементов на экране. Это просто:
 
 ```js
 constructor(props){
@@ -117,23 +117,24 @@ render(){
   </div>;
 }
 ```
-This looks a bit more complex but we're using the same pattern to access each DOM node. The only difference is that instead of using a single reference for each element, we add each element to an array. In the **[componentDidMount()](https://reactjs.org/docs/react-component.html#componentdidmount)** method we use **[TimelineLite.staggerTo()](https://greensock.com/docs/TimelineLite/staggerTo())** and GSAP does its magic to create a staggered animation!
+Это выглядит немного сложнее, но мы используем один и тот же шаблон для доступа к каждому узлу DOM. Единственное отличие состоит в том, что вместо использования одной ссылки для каждого элемента мы добавляем каждый элемент в массив. В методе **[componentDidMount()](https://reactjs.org/docs/react-component.html#componentdidmount)** мы используем **[TimelineLite.staggerTo()](https://greensock.com/docs/TimelineLite/staggerTo())**, а GSAP творит чудеса для создания смещенной анимации!
 
 #### MULTIPLE ELEMENTS DEMO
 [https://stackblitz.com/edit/gsap-react-multiple-elements](https://stackblitz.com/edit/gsap-react-multiple-elements)
 
-## Creating a Complex Sequence
+## Создание сложной последовательности
 
-We won't always get all the elements in an array so sometimes we might need to create a complex animation using different elements. Just like in the first example we store a reference in the constructor for each element and create our timeline in the **[componentDidMount()](https://reactjs.org/docs/react-component.html#componentdidmount)** method:
+Мы не всегда получаем все элементы в массиве, поэтому иногда нам может потребоваться создать сложную анимацию с использованием разных элементов. Как и в первом примере, мы сохраняем ссылку в конструкторе для каждого элемента и создаем нашу временную шкалу в **[componentDidMount()](https://reactjs.org/docs/react-component.html#componentdidmount)** метод:
 
 #### TIMELINE SEQUENCE DEMO
 [https://stackblitz.com/edit/gsap-react-timeline-sequence](https://stackblitz.com/edit/gsap-react-timeline-sequence)
 
-Note how in this example we use a combination of methods. Most of the elements are stored as a an instance property using `this.element = null`, but also we're adding a group of elements using an `array.map()`. Instead of using the `map()` callback to create tweens in the timeline (which is completely possible), we're adding them to an array that is passed in the **[staggerFrom()](https://greensock.com/docs/TimelineLite/staggerToFrom)** method to create the stagger effect.
+Обратите внимание, как в этом примере мы используем комбинацию методов. Большинство элементов хранятся как свойство экземпляра с использованием this.element = null, но мы также добавляем группу элементов с помощью array.map (). Вместо использования обратного вызова `map ()` для создания анимаций на временной шкале (что вполне возможно) мы добавляем их в массив, который передается в **[staggerFrom()](https://greensock.com/docs/TimelineLite/staggerToFrom)** для создания эффекта колебания.
 
-## Animating Via State
+## Анимация через состояние
 
 The most commonly used pattern to update a React app is through changing the state of its components. So it's easy to control when and how elements are animated based on the app state. It's not very difficult to listen to state changes and control a GSAP animation depending on state, using the **[componentDidUpdate()](https://reactjs.org/docs/react-component.html#componentdidupdate)** lifecycle method. Basically we compare the value of a state property before the update and after the update, and control the animation accordingly.
+Наиболее часто используемый шаблон для обновления приложения React - это изменение состояния его компонентов. Таким образом, легко контролировать, когда и как элементы анимируются в зависимости от состояния приложения. Прослушивать изменения состояния и управлять анимацией GSAP в зависимости от состояния не очень сложно, используя **[componentDidUpdate()](https://reactjs.org/docs/react-component.html#componentdidupdate)** метод жизненного цикла. Обычно мы сравниваем значение свойства состояния до и после обновления и соответственно управляем анимацией.
 
 ```js
 componentDidUpdate(prevProps, prevState) {
@@ -146,9 +147,9 @@ componentDidUpdate(prevProps, prevState) {
 #### CONTROL THROUGH STATE DEMO
 [https://stackblitz.com/edit/gsap-react-state-control](https://stackblitz.com/edit/gsap-react-state-control)
 
-In this example we compare the value of different state properties (one for each control method implemented in the component) to control the animation as those values are updated. It's important to notice that this example is a bit convoluted for doing something that can be achieved by calling a method directly in an event handler (such as `onClick`). The main idea is to show the proper way of controlling things through the state.
+В этом примере мы сравниваем значения различных свойств состояния (по одному для каждого метода управления, реализованного в компоненте), чтобы управлять анимацией по мере обновления этих значений. Важно отметить, что этот пример немного запутан для выполнения чего-то, что может быть достигнуто путем вызова метода непосредственно в обработчике событий (например, `onClick`). Основная идея - показать, как правильно управлять вещами через государство.
 
-A cleaner and simpler way to control an animation is by passing a **[prop](https://reactjs.org/docs/jsx-in-depth.html#props-in-jsx)** from a parent component or through an app state store such as Redux or MobX. This modal samples does exactly that:
+Более чистый и простой способ управлять анимацией - передать **[prop](https://reactjs.org/docs/jsx-in-depth.html#props-in-jsx)** из родительского компонента или через хранилище состояний приложений, такое как Redux или MobX. Эти модальные образцы делают именно это:
 
 ```js
 // parent component
@@ -174,20 +175,20 @@ componentDidUpdate(){
 }
 ```
 
-As you can see the modal animation is controlled by updating the `visible` prop passed by its parent, as well as a *close* method passed as a prop. This code is far simpler and reduces the chance of error.
+Как видите, модальная анимация управляется обновлением свойства `visible`, переданного его родительским элементом, а также методом *close*, переданным как свойство. Этот код намного проще и снижает вероятность ошибки.
 
 #### STATE MODAL DEMO
 [https://stackblitz.com/edit/gsap-react-state-modal](https://stackblitz.com/edit/gsap-react-state-modal)
 
-## Using React Transition Group
-**[React Transition Group](https://reactcommunity.org/react-transition-group/)**(RTG)  is a great tool that allows another level of control when animating an element in a React app. This is referred to as the capacity to mount and unmount either the element being animated or an entire component. This might not seem like much when animating a single image or a div, but this could mean a significant performance enhancement in our app in some cases.
+## Использование React Transition Group
+**[React Transition Group](https://reactcommunity.org/react-transition-group/)**(RTG) - отличный инструмент, который обеспечивает другой уровень контроля при анимации элемента в приложении React. Это называется способностью монтировать и демонтировать либо анимируемый элемент, либо весь компонент. Это может показаться не таким уж большим при анимации одного изображения или div, но в некоторых случаях это может означать значительное повышение производительности нашего приложения.
 
 #### SIMPLE TRANSITION DEMO
 [https://stackblitz.com/edit/gsap-react-simple-transition-group](https://stackblitz.com/edit/gsap-react-simple-transition-group)
 
-In this example the **[<Transition>](https://reactcommunity.org/react-transition-group/transition)** component wraps the element we want to animate. This element remains unmounted while it's `show` prop is false. When the value changes to `true`, it is mounted and then the animation starts. Then when the prop is set to `false` again, another animation starts and when this is completed it's unmounted. We can also use the `<Transition>` component to wrap the entire component.
+В этом примере компонент **[<Transition>](https://reactcommunity.org/react-transition-group/transition)** обертывает элемент, который мы хотим анимировать. Этот элемент остается отключенным, пока его свойство `show` имеет значение false. Когда значение изменяется на `true`, он монтируется, а затем начинается анимация. Затем, когда свойство снова устанавливается на `false`, запускается другая анимация, и когда она завершается, она отключается. Мы также можем использовать компонент `<Transition>` для обертывания всего компонента.
 
-RTG also provides the **[<TransitionGroup>](https://reactcommunity.org/react-transition-group/)** component, which allows us to control a group of `<Transition>` components, in the same way a single `<Transition>` component allows to control the mounting and unmounting of a component. This is a good alternative for animating dynamic lists that could have elements added and/or removed, or lists based on data filtering.
+RTG также предоставляет компонент **[<TransitionGroup>](https://reactcommunity.org/react-transition-group/)**, который позволяет нам аналогичным образом управлять группой компонентов `<Transition>` один компонент `<Transition>` позволяет управлять подключением и отключением компонента. Это хорошая альтернатива для анимации динамических списков, в которые можно добавлять и/или удалять элементы, или списков на основе фильтрации данных.
 
 #### TRANSITION GROUP DEMO
 [https://stackblitz.com/edit/gsap-react-transition-group-list](https://stackblitz.com/edit/gsap-react-transition-group-list)
@@ -208,14 +209,14 @@ RTG also provides the **[<TransitionGroup>](https://reactcommunity.org/react-tra
   }}
 >
 ```
-In this example we use the **[addEndListener()](https://reactcommunity.org/react-transition-group/transition#Transition-prop-addEndListener)** callback from the `<Transition>` component. This gives us two parameters, the `node` element being added in the DOM tree and the `done` callback, which allows to control the inner state of the `<Transition>` component as the element is mounted and unmounted.
+В этом примере мы используем обратный вызов **[addEndListener()](https://reactcommunity.org/react-transition-group/transition#Transition-prop-addEndListener)** из компонента `<Transition>`. Это дает нам два параметра: элемент `node`, добавляемый в дерево DOM, и обратный вызов `done`, который позволяет контролировать внутреннее состояние компонента `<Transition>`, когда элемент монтируется и отключается.
 
-The entire animation is controlled by the `in` prop, which triggers the `addEndListener()` and ultimately the animation. You may notice that we're not creating two different animations for the enter/exit state of the component. We create a single animation that uses the same DOM node and the same properties. By doing this, GSAP's overwrite manager kills any existing animation affecting the same element and properties, giving us a seamless transition between the enter and exit animations.
+Вся анимация управляется свойством `in`, которое запускает `addEndListener()` и, в конечном итоге, анимацию. Вы можете заметить, что мы не создаем две разные анимации для состояния входа/выхода компонента. Мы создаем единую анимацию, которая использует тот же узел DOM и те же свойства. Таким образом, менеджер перезаписи GSAP уничтожает любую существующую анимацию, влияющую на один и тот же элемент и свойства, обеспечивая плавный переход между анимациями входа и выхода.
 
-Finally, using RTG allows us for a more fine-grained code, because we can use all the event callbacks provided by GSAP (`onStart`, `onUpdate`, `onComplete`, `onReverse`, `onReverseComplete`) to run all the code we want, before calling the `done` callback (is extremely important to notify that the animation has completed).
+Наконец, использование RTG позволяет нам создать более детализированный код, поскольку мы можем использовать все обратные вызовы событий, предоставляемые GSAP (`onStart`, `onUpdate`, `onComplete`, `onReverse`, `onReverseComplete`) для запуска всех код, который мы хотим, перед вызовом обратного вызова `done` (чрезвычайно важно для уведомления о завершении анимации).
 
-## Animating Route Changes
-Routing is one of the most common scenarios in a React app. Route changes in a React app means that an entirely different view is rendered depending on the path in the browser's address bar which is the most common pattern to render a completely different component in a route change. Obviously animating those changes gives a very professional look and feel to our React apps. Rendering a new component based on a route change means that the component of the previous route is unmounted and the one for the next route is mounted. We already covered animating components animations tied to mount/unmount using the `<Transition>` component from RTG, so this is a very good option to animate route changes.
+## Анимация изменений маршрута
+Маршрутизация - один из наиболее распространенных сценариев в приложении React. Изменения маршрута в приложении React означают, что отображается совершенно другое представление в зависимости от пути в адресной строке браузера, который является наиболее распространенным шаблоном для отображения совершенно другого компонента при изменении маршрута. Очевидно, что анимация этих изменений придает нашим приложениям React очень профессиональный вид. Отображение нового компонента на основе изменения маршрута означает, что компонент предыдущего маршрута отключен, а компонент для следующего маршрута смонтирован. Мы уже рассмотрели анимацию анимации компонентов, привязанных к монтированию/размонтированию с использованием компонента `<Transition>` из RTG, так что это очень хороший вариант для анимации изменений маршрута.
 
 ```js
 <BrowserRouter>
@@ -232,7 +233,7 @@ Routing is one of the most common scenarios in a React app. Route changes in a R
   </div>
 </BrowserRouter>
 ```
-This main component uses React Router's **[<BrowserRouter>](https://reacttraining.com/react-router/web/api/BrowserRouter)** and **[<Route>](https://reacttraining.com/react-router/web/api/Route)** and checks the `match` object passed as a prop to every `<Route>` component, while returning the component that should be rendered for each URL. Also we pass the `show` property to each component, in the same way we did in the **transition** example.
+Этот основной компонент использует React Router **[<BrowserRouter>](https://reacttraining.com/react-router/web/api/BrowserRouter)** и **[<Route>](https://reacttraining.com/react-router/web/api/Route)** и проверяет объект `match`, переданный в качестве опоры каждому компоненту `<Route>`, возвращая компонент, который должен отображаться для каждого URL. Также мы передаем свойство `show` каждому компоненту точно так же, как в примере **transition**.
 
 ```js
 <Transition
@@ -250,53 +251,55 @@ This main component uses React Router's **[<BrowserRouter>](https://reacttrainin
 >
 ```
 
-As you can see, the code is basically the same used to animate a single component; the only difference is that now we have two animations happening in different components at the same time.
+Как видите, код в основном тот же, что и для анимации отдельного компонента; Единственная разница в том, что теперь у нас есть две анимации, которые происходят в разных компонентах одновременно.
 
 #### ROUTE ANIMATION DEMO
 [https://stackblitz.com/edit/gsap-react-route-animation](https://stackblitz.com/edit/gsap-react-route-animation)
 
-It's worth noting that the animations used in this example are quite simple but you can use any type of animation even [complex, nested animations](https://css-tricks.com/writing-smarter-animation-code/).
+Стоит отметить, что анимации, используемые в этом примере, довольно просты, но вы можете использовать любой тип анимации, даже [сложные, вложенные анимации](https://css-tricks.com/writing-smarter-animation-code/).
 
-As you can see by now, using [GSAP](https://greensock.com/gsap) and [React](https://reactjs.org/) can play together nicely. With all the [tools and plugins](https://greensock.com/plugins/?product_id=4921) GSAP has to offer the sky is the limit for creating compelling and amazing React applications!
+Как вы видите, использование [GSAP](https://greensock.com/gsap) и [React](https://reactjs.org/) прекрасно сочетается друг с другом. 
+Со всеми [инструментами и плагинами](https://greensock.com/plugins/?product_id=4921) GSAP может предложить безграничные возможности для создания убедительных и потрясающих приложений React!
 
 ## FAQ
 
-1. What is this "Virtual DOM" thing, that is referred so much when it comes to React Apps?. Can GSAP work with this virtual dom?
+1. Что это за «виртуальный DOM», о котором так много говорят, когда речь идет о React Apps ?. Может ли GSAP работать с этим виртуальным домом?
 
-   **A** The Virtual DOM is what React uses to update the DOM in a fast and efficient way. In order to learn more about it check **[this article](https://medium.freecodecamp.org/a-quick-guide-to-learn-react-and-how-its-virtual-dom-works-c869d788cd44)** and the **[React Docs](https://reactjs.org/docs/faq-internals.html)**. GSAP can't work with the virtual DOM because the elements in the Virtual DOM are not exactly DOM nodes per-se.
+   **A** Виртуальная модель DOM - это то, что React использует для быстрого и эффективного обновления DOM. Чтобы узнать об этом больше, проверьте **[эту статью](https://medium.freecodecamp.org/a-quick-guide-to-learn-react-and-how-its-virtual-dom-works-c869d788cd44)** и **[React Docs](https://reactjs.org/docs/faq-internals.html)**. GSAP не может работать с виртуальной моделью DOM, потому что элементы виртуальной модели DOM сами по себе не являются узлами DOM.
 
-2. I often read about the declarative nature of React. Does that affect how we use GSAP in a React APP?
+2. Я часто читал о декларативном характере React. Влияет ли это на то, как мы используем GSAP в приложении React?
 
-   **A** Yes. React works by updating the rendered DOM through changes in the App state, so when creating an animation using GSAP, instead of reaching out directly to the DOM, like in most other cases, we need to wait for those changes in the app state and the DOM to be rendered, in order to use the current representation of the app state and create the animation. To learn more about how declarative and imperative code work read **[this article](https://codeburst.io/declarative-vs-imperative-programming-a8a7c93d9ad2)**.
+   **A** Да. React работает, обновляя визуализированный DOM за счет изменений в состоянии приложения, поэтому при создании анимации с использованием GSAP вместо прямого обращения к DOM, как в большинстве других случаев, нам нужно дождаться этих изменений в состоянии приложения и DOM для визуализации, чтобы использовать текущее представление состояния приложения и создать анимацию. Чтобы узнать больше о том, как работает декларативный и императивный код, прочтите **[эту статью](https://codeburst.io/declarative-vs-imperative-programming-a8a7c93d9ad2)**.
 
-3. In the second sample I see this code in the ref callback `ref={div => this.cards[i] = div}`. Why is the index being used instead of just pushing the element in the array?
+3. Во втором примере я вижу этот код в обратном вызове ref `ref={div => this.cards[i] = div}`. Почему используется индекс, а не просто вставка элемента в массив?
 
-   **A** The reason for that is that every time a React component is re-rendered, the `render` method is executed, but the original instance remains unchanged. The array used to create the animation is created in the component's constructor. The GSAP animation (a TimelineLite) is created in the `componentDidMount` hook. These two elements are created just once in the App's lifecycle, while the render method is executed on every re-render. Therefore if we push the elements to the array on every re-render, even though the Timeline instance won't change, the array will get bigger and bigger every time the component is re-rendered. This could cause a memory issue, especially for large collections.
+   **A** Причина этого в том, что каждый раз, когда компонент React повторно визуализируется, выполняется метод `render`, но исходный экземпляр остается неизменным. Массив, используемый для создания анимации, создается в конструкторе компонента. Анимация GSAP (TimelineLite) создается в ловушке `componentDidMount`. Эти два элемента создаются только один раз в жизненном цикле приложения, а метод рендеринга выполняется при каждом повторном рендеринге. Поэтому, если мы помещаем элементы в массив при каждом повторном рендеринге, даже если экземпляр Timeline не изменится, массив будет становиться все больше и больше каждый раз, когда компонент повторно рендерится. Это могло вызвать проблемы с памятью, особенно для больших коллекций.
 
-4. In the guide one of the samples triggers animations via the state of a component or the app. Is it possible to update the state of the component/app using GSAP?
+4. В руководстве один из примеров запускает анимацию в зависимости от состояния компонента или приложения. Можно ли обновить состояние компонента/приложения с помощью GSAP?
 
-   **A** Absolutely! All you have to do is use one of the many callback events GSAP has to offer. The only precaution is to be aware of infinite loops. That is if an animation is started on the render method of a component and a callback from that animation updates the state of the component then that will trigger a re-render, which will start the animation again. You can check this **[simple example](https://stackblitz.com/edit/gsap-update-state)** of how that can be done.
+   **A** Абсолютно! Все, что вам нужно сделать, это использовать одно из многих событий обратного вызова, которые может предложить GSAP. Единственная мера предосторожности - знать о бесконечных циклах. То есть, если анимация запускается в методе рендеринга компонента и обратный вызов этой анимации обновляет состояние компонента, то это запускает повторный рендеринг, который снова запускает анимацию. Вы можете проверить этот **[простой пример](https://stackblitz.com/edit/gsap-update-state)** того, как это можно сделать.
 
-5. Is it possible to trigger a route change using GSAP?
+5. Можно ли инициировать изменение маршрута с помощью GSAP?
 
-   **A** It is possible using React Router's API. Although is not recommended because using React Router's API directly will prevent triggering the route change animations when using the browser's *back* and *forward* buttons. However, using React Transition Group with GSAP does trigger the route change animations with the native navigation methods.
+   **A** Это возможно с помощью API React Router. Хотя это не рекомендуется, потому что использование React Router API напрямую предотвратит запуск анимации изменения маршрута при использовании кнопок браузера *назад* и *вперёд*. Однако использование React Transition Group с GSAP действительно запускает анимацию изменения маршрута с помощью собственных методов навигации.
 
-6. Can I use other GSAP plugins and tools in a React App? This guide shows only TweenMax, Timeline and the CSS Plugin?
+6. Могу ли я использовать другие плагины и инструменты GSAP в приложении React? В этом руководстве показаны только TweenMax, Timeline и CSS Plugin?
 
-   **A** Yes, any GSAP tool or plugin you want can be used in a React app. Just be sure to follow the same patterns and guidelines from this article and you'll be fine.
+   **A** Да, любой инструмент или плагин GSAP, который вы хотите, можно использовать в приложении React. Просто следуйте тем же шаблонам и рекомендациям из этой статьи, и всё будет в порядке.
 
-7. I tried the code in the guide and samples, but it doesn't work. What can i do?
+7. Я пробовал код из руководства и примеров, но он не работает. Что я могу сделать?
 
-   **A** Head to the **[GreenSock forums](https://greensock.com/forums/forum/11-gsap/)** where all your questions will be answered as fast as possible.
+   **A** Зайдите на **[форумы GreenSock](https://greensock.com/forums/forum/11-gsap/)**, где на все ваши вопросы ответят как можно быстрее.
 
-8. I want to contribute or post an issue to this guide. Where can I do that?
+8. Я хочу внести свой вклад в это руководство или опубликовать проблему. Где я могу это сделать?
 
-   **A** Even though this guide was reviewed by GreenSock and React experts, perhaps something might have slipped away, or with time and new versions, some things should or could be done differently. For those cases please head to this **[GitHub Repo](https://github.com/rhernandog/gsap-react-guide)** and inform any issues or create a Pull Request with the changes you think should be added.
+   **A** Несмотря на то, что это руководство было просмотрено экспертами GreenSock и React, возможно, что-то ускользнуло, или со временем и новыми версиями некоторые вещи следует или можно было бы сделать по-другому. В таких случаях перейдите в **[GitHub Repo](https://github.com/rhernandog/gsap-react-guide)** и сообщите о любых проблемах или создайте запрос на слияние с изменениями, которые, по вашему мнению, должны быть добавлены.
 
-**New to GSAP?** Check out the **[Getting Started Guide](https://greensock.com/get-started-js)**. Got questions? Head over to the **[GreenSock forums](https://greensock.com/forums/forum/11-gsap/)** where there's a fantastic community of animators.
+**Впервые в GSAP?** Check out the **[Getting Started Guide](https://greensock.com/get-started-js)**. Got questions? Head over to the **[GreenSock forums](https://greensock.com/forums/forum/11-gsap/)** where there's a fantastic community of animators.
+Ознакомьтесь с **[Руководством по началу работы](https://greensock.com/get-started-js)**. Есть вопросы? Зайдите на **[форумы GreenSock](https://greensock.com/forums/forum/11-gsap/)**, где есть фантастическое сообщество аниматоров.
 
-## Acknowledgments
-I'd like to thank the three developers that took time from their work and lives to review this guide as well as the samples in it. I couldn't have done this without their help and valuable input. Please be sure to follow them:
+## Благодарности
+Я хотел бы поблагодарить трех разработчиков, которые потратили время на свою работу и жизнь, чтобы просмотреть это руководство, а также примеры в нем. Я не смог бы сделать это без их помощи и ценной информации. Обязательно следуйте им:
 
 - **Xiaoyan Wang**: A very talented React developer. While Xiaoyan doesn't have a very active social life (twitter, facebook, etc), you can follow what he does in **[GitHub](https://github.com/horizon-blue)**.
 
